@@ -12,9 +12,8 @@ MAINTAINER ClassCat Co.,Ltd. <support@classcat.com>
 
 RUN apt-get update && apt-get -y upgrade \
   && apt-get install -y language-pack-en language-pack-en-base \
-  && apt-get install -y language-pack-ja language-pack-ja-base
-
-RUN update-locale LANG="en_US.UTF-8"
+  && apt-get install -y language-pack-ja language-pack-ja-base \
+  && update-locale LANG="en_US.UTF-8"
 
 RUN apt-get install -y openssh-server supervisor rsyslog mysql-client && apt-get clean
 
