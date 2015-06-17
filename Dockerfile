@@ -7,6 +7,7 @@ MAINTAINER ClassCat Co.,Ltd. <support@classcat.com>
 ########################################################################
 
 #--- HISTORY -----------------------------------------------------------
+# 17-jun-15 : node-v0.12.4
 # 21-may-15 : fixed.
 # 21-may-15 : Created for quay.io.
 #-----------------------------------------------------------------------
@@ -16,6 +17,7 @@ RUN apt-get update && apt-get -y upgrade \
   && apt-get install -y language-pack-ja language-pack-ja-base \
   && update-locale LANG="en_US.UTF-8" \
   && apt-get install -y openssh-server supervisor rsyslog mysql-client \
+  && apt-get install -y g++ make unzip && apt-get clean \
   && mkdir -p /var/run/sshd \
   && sed -ri "s/^PermitRootLogin\s+.*/PermitRootLogin yes/" /etc/ssh/sshd_config
 
@@ -24,10 +26,14 @@ RUN apt-get update && apt-get -y upgrade \
 ADD assets/supervisord.conf /etc/supervisor/supervisord.conf
 
 WORKDIR /usr/local
-RUN apt-get -y install g++ make unzip && apt-get clean \
-  && wget http://nodejs.org/dist/v0.10.37/node-v0.10.37.tar.gz \
-  && tar xfz node-v0.10.37.tar.gz \
-  && cd node-v0.10.37 \
+
+#RUN wget http://nodejs.org/dist/v0.10.37/node-v0.10.37.tar.gz \
+#  && tar xfz node-v0.10.37.tar.gz \
+#  && cd node-v0.10.37 \
+
+RUN wget http://nodejs.org/dist/v0.12.4/node-v0.12.4.tar.gz \
+  && tar xfz node-v0.12.4.tar.gz \
+  && cd node-v0.12.4 \
   && ./configure && make && make install \
   && cd .. \
   && wget http://easyrtc.com/files/easyrtc_server_example.zip \
